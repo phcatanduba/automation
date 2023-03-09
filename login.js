@@ -14,7 +14,7 @@ global.driver = new Builder().forBrowser('chrome').build();
 run()
 
 async function run() {
-    await driver.get(link);
+    await global.driver.get(link);
     const loginBar = await getElement("/html/body/div[2]/div[3]/div/div[2]/form/div[1]/input");
     await loginBar.sendKeys(login);
     const passwordBar = await getElement("/html/body/div[2]/div[3]/div/div[2]/form/div[3]/input");
