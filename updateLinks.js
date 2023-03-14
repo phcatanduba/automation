@@ -26,6 +26,7 @@ async function updateLinks() {
             const urlXpath = `/html/body/div/div[2]/div[2]/form/div/div[2]/input`
             const updateUrlXpath = `/html/body/div/div[3]/div/div/div[1]/button[1]`
             const descriptionXpath = `/html/body/div[3]/div/div[2]/div/div/div[7]/div[1]/div/ul/li[1]/div[1]/div/div[2]/div/div/form/div/div[1]/div/div[2]`
+            const settingsButtonXpath = "/html/body/div[3]/div/div[2]/div/div/div[7]/div[1]/div/ul/li[1]/div[1]/div/div[2]/div/div/form/div/div[2]/d2l-htmleditor//div[1]/div/div[1]/div[1]/d2l-htmleditor-toolbar-full//div[1]/div[2]/d2l-htmleditor-button-toggle[1]//button"
             const editDescriptionXpath = `/html/body/div[3]/div/div[2]/div/div/div[7]/div[1]/div/ul/li[1]/div[1]/div/div[2]/div/div/form/div/div[2]/d2l-htmleditor//div[1]/div/div[1]/div[1]/d2l-htmleditor-toolbar-full//div[1]/div[1]/div/d2l-htmleditor-button[8]//button`
             const inputDescriptionXpath = `/html/body/div[3]/div/div[2]/div/div/div[7]/div[1]/div/ul/li[1]/div[1]/div/div[2]/div/div/form/div/div[2]/d2l-htmleditor//div[1]/div/div[2]/d2l-htmleditor-sourcecode-dialog//d2l-dialog/div/div/div[2]`
             const updateDescriptionXpath = `/html/body/div[3]/div/div[2]/div/div/div[7]/div[1]/div/ul/li[1]/div[1]/div/div[2]/div/div/form/div/div[2]/d2l-htmleditor//div[1]/div/div[2]/d2l-htmleditor-sourcecode-dialog//d2l-dialog/d2l-button[1]`
@@ -42,11 +43,11 @@ async function updateLinks() {
 
             await global.driver.sleep(2000)
             
-            await global.driver.wait(until.elementLocated(By.xpath(linkXpath)), 60000);
+            await global.driver.wait(until.elementLocated(By.xpath(linkXpath)), 60000)
             const linkElement = await getElement(linkXpath)
             await linkElement.click()
 
-            await global.driver.wait(until.elementLocated(By.xpath(editLinkXpath)), 60000);
+            await global.driver.wait(until.elementLocated(By.xpath(editLinkXpath)), 60000)
             const editLinkElement = await getElement(editLinkXpath)
             await editLinkElement.click()
 
@@ -56,6 +57,7 @@ async function updateLinks() {
             await urlElement.sendKeys(Key.CONTROL, "a", Key.DELETE)
             await urlElement.sendKeys(link)
 
+            await global.driver.wait(until.elementLocated(By.xpath(settingsButtonXpath), 60000))
             const updateUrlElement = await getElement(updateUrlXpath)
             await updateUrlElement.click()
 
@@ -64,6 +66,10 @@ async function updateLinks() {
             await global.driver.sleep(2000)
             const descriptionElement = await getElement(descriptionXpath)
             await descriptionElement.click()
+
+            await global.driver.wait(until.elementLocated(By.xpath(settingsButtonXpath), 60000))
+            const settingsButtonElement = await getElement(settingsButtonXpath)
+            settingsButtonElement.click()
 
             await global.driver.wait(until.elementLocated(By.xpath(editDescriptionXpath)), 60000);
             const editDescriptionElement = await getElement(editDescriptionXpath)
