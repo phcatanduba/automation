@@ -25,8 +25,8 @@ async function updateLinks() {
             const editLinkXpath = `/html/body/div[3]/div/div[2]/div/div/div[7]/div[1]/div/ul/li[1]/div[1]/div/div[2]/div/div/div[1]/d2l-dropdown-context-menu/d2l-dropdown-menu/d2l-menu/d2l-menu-item[4]`
             const urlXpath = `/html/body/div/div[2]/div[2]/form/div/div[2]/input`
             const updateUrlXpath = `/html/body/div/div[3]/div/div/div[1]/button[1]`
-            const descriptionXpath = `/html/body/div[3]/div/div[2]/div/div/div[7]/div[1]/div/ul/li[1]/div[1]/div/div[2]/div/div/form/div/div[1]/div/div[2]/div/div/d2l-html-block//div`
-            const editDescriptionXpath = `/html/body/div[3]/div/div[2]/div/div/div[7]/div[1]/div/ul/li[1]/div[1]/div/div[2]/div/div/form/div/div[2]/d2l-htmleditor//div[1]/div/div[1]/div[1]/d2l-htmleditor-toolbar-full//div[1]/div[1]/div/d2l-htmleditor-button[8]//button/svg`
+            const descriptionXpath = `/html/body/div[3]/div/div[2]/div/div/div[7]/div[1]/div/ul/li[1]/div[1]/div/div[2]/div/div/form/div/div[1]/div/div[2]`
+            const editDescriptionXpath = `/html/body/div[3]/div/div[2]/div/div/div[7]/div[1]/div/ul/li[1]/div[1]/div/div[2]/div/div/form/div/div[2]/d2l-htmleditor//div[1]/div/div[1]/div[1]/d2l-htmleditor-toolbar-full//div[1]/div[1]/div/d2l-htmleditor-button[8]//button`
             const inputDescriptionXpath = `/html/body/div[3]/div/div[2]/div/div/div[7]/div[1]/div/ul/li[1]/div[1]/div/div[2]/div/div/form/div/div[2]/d2l-htmleditor//div[1]/div/div[2]/d2l-htmleditor-sourcecode-dialog//d2l-dialog/div/div/div[2]`
             const updateDescriptionXpath = `/html/body/div[3]/div/div[2]/div/div/div[7]/div[1]/div/ul/li[1]/div[1]/div/div[2]/div/div/form/div/div[2]/d2l-htmleditor//div[1]/div/div[2]/d2l-htmleditor-sourcecode-dialog//d2l-dialog/d2l-button[1]`
             
@@ -50,27 +50,30 @@ async function updateLinks() {
             const editLinkElement = await getElement(editLinkXpath)
             await editLinkElement.click()
 
-            //await global.driver.wait(until.elementLocated(By.xpath(urlXpath)), 60000);
-            const urlElement = await getElement("/html/body/div/div[1]/a/span")
+            await global.driver.switchTo().frame(getElement("/html/body/div[5]/div/iframe"))
+            await global.driver.wait(until.elementLocated(By.xpath(urlXpath)), 60000);
+            const urlElement = await getElement(urlXpath)
+            await urlElement.sendKeys(Key.CONTROL, "a", Key.DELETE)
             await urlElement.sendKeys(link)
 
-            //await global.driver.wait(until.elementLocated(By.xpath(updateUrlXpath)), 60000);
             const updateUrlElement = await getElement(updateUrlXpath)
             await updateUrlElement.click()
 
-            //await global.driver.wait(until.elementLocated(By.xpath(descriptionXpath)), 60000);
+            await global.driver.switchTo().defaultContent()
+
+            await global.driver.sleep(2000)
             const descriptionElement = await getElement(descriptionXpath)
             await descriptionElement.click()
 
-            //await global.driver.wait(until.elementLocated(By.xpath(editDescriptionXpath)), 60000);
+            await global.driver.wait(until.elementLocated(By.xpath(editDescriptionXpath)), 60000);
             const editDescriptionElement = await getElement(editDescriptionXpath)
             await editDescriptionElement.click()
             
-            //await global.driver.wait(until.elementLocated(By.xpath(inputDescriptionXpath)), 60000);
+            await global.driver.wait(until.elementLocated(By.xpath(inputDescriptionXpath)), 60000);
             const inputDescriptionElement = await getElement(inputDescriptionXpath)
             await inputDescriptionElement.sendKeys(description)
 
-            //await global.driver.wait(until.elementLocated(By.xpath(updateDescriptionXpath)), 60000);
+            await global.driver.wait(until.elementLocated(By.xpath(updateDescriptionXpath)), 60000);
             const updateDescriptionElement = await getElement(updateDescriptionXpath)
             await updateDescriptionElement.click()
         }

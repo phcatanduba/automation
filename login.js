@@ -24,7 +24,7 @@ async function run() {
 }
 
 async function getElement(xpath) {
-    return await driver.findElement(By.xpath(xpath))
+    return await global.driver.findElement(By.xpath(xpath))
 }
 
 module.exports = { getElement };
